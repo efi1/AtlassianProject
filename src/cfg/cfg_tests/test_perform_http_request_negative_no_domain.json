@@ -1,0 +1,17 @@
+{
+	"task_data": {
+		"task_name": "Preform HTTP request",
+		"task_parameters": {
+			"domain": "",
+			"method": "get",
+			"port": 443,
+			"path": "/"
+		}
+	},
+	"return_data": {
+		"return_value": null,
+		"status_code": 404,
+		"validate_resp_val": true
+	},
+	"api_path": "/api/tasks/perform_http_request"
+}

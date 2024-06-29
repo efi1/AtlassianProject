@@ -1,0 +1,14 @@
+{
+  "task_data": {
+    "task_name": "process tree clii by ssh connection",
+    "task_parameters": {
+      "pid": "1"
+    }
+  },
+  "return_data": {
+    "return_value": null,
+    "status_code": 404,
+		"validate_resp_val": false
+  },
+  "api_path": "/api/tasks/process_tree_cli"
+}

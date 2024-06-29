@@ -1,0 +1,16 @@
+{
+	"task_data": {
+		"task_name": "start HTTP server",
+		"task_parameters": {
+			"page_uri": "http://localhost",
+			"port": 8090,
+			"data_to_return": ""
+		}
+	},
+	"return_data": {
+		"return_value": "testclient",
+		"status_code": 200,
+		"validate_resp_val": false
+	},
+	"api_path": "/api/tasks/start_http_server"
+}

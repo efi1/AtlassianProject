@@ -1,0 +1,17 @@
+.idea
+.idea/*
+.pytest_cache
+.venv/
+.venv
+dist/
+build/
+src/pythonMProject.egg-info
+src/pythonMProject.egg-info/
+logs
+./logfile.log
+logs/logfile.log
+build
+dist
+src/web/drivers/chromedriver.exe
+src/web/clients/__pycache__/
+src/web/page_objects/

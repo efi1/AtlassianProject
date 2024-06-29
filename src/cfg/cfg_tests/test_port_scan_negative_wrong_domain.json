@@ -1,0 +1,16 @@
+{
+  "task_data": {
+    "task_name": "port scan",
+    "task_parameters": {
+      "domain_or_ip": "localhostt",
+      "from_port": 1,
+      "to_port": 65535
+    }
+  },
+  "return_data": {
+    "return_value": "",
+    "status_code": 404,
+		"validate_resp_val": false
+  },
+  "api_path": "/api/tasks/port_scan"
+}

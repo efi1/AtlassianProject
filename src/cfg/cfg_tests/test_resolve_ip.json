@@ -1,0 +1,12 @@
+{
+    "task_data": {
+        "task_name": "DNS query",
+        "task_parameters": {"domain": "www.udistudio.com"}
+    },
+    "return_data": {
+        "return_value": "162.215.249.83",
+        "status_code": 200,
+		"validate_resp_val": true
+    },
+    "api_path": "/api/tasks/resolve_ip"
+}
