@@ -1,2 +1,15 @@
+url = 'https://id.atlassian.com/login'
+email = 'efio.at.work@gmail.com'
+pg_header = 'efio at_work'
+passwd = 'aX7&oMCc1^'
+new_proj_name = 'test_proj_01'
+new_repo_name = 'test_repo_01'
+branch_name = 'test_branch_01'
+filename = 'README.md'
 cfg_tests_dir = 'src.cfg.cfg_tests'
+REPOSITORY = 'Repository'
+PROJECT = 'Project'
+REPOSITORIES = 'Repositories'
+PROJECTS = 'Projects'
+
 

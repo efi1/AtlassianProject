@@ -1,5 +1,6 @@
-selenium
+selenium~=4.22.0
 webdriver_manager
 lxml
 contextlib2
-setuptools
+setuptools~=70.1.1
+pytest~=8.2.2

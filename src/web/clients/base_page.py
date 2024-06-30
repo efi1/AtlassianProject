@@ -1,7 +1,8 @@
+import inspect
 import os
 import shutil
+import logging
 from pathlib import Path
-
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
@@ -11,10 +12,8 @@ CHROME_DRIVER_PATH = Path(__file__).parent.parent.joinpath('drivers', 'chromedri
 TOTAL_SPENT_AMOUNT = 500
 IS_INSTALL = os.environ.get('is_install')
 IS_RUN_SILENTLY = os.environ.get('is_run_silently')
+LOGGER = logging.getLogger()
 
-
-# to avoide SSL verificqation when using ChromeDriverManager().install()
-# os.environ['WDM_SSL_VERIFY'] = '0'
 
 class BasePage:
     def __init__(self, *args, **kwargs):
@@ -29,6 +28,7 @@ class BasePage:
         window_size = kwargs.get('window_size', 'start-maximized')
         self.options.add_argument(window_size)
         if not Path(CHROME_DRIVER_PATH).exists():
+            LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}: no webdriver - creating a new one")
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager
                                                            ().install()), options=self.options)
             shutil.copy(self.driver.service.path, CHROME_DRIVER_PATH)
