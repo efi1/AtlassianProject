@@ -4,6 +4,8 @@ from selenium.common import TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from src.web.clients.locator import Locator
+from selenium.webdriver.common.by import By
+
 
 LOGGER = logging.getLogger()
 
@@ -65,9 +67,8 @@ class BaseElements(object):
 
         return wrapper
 
-    # Example usage
     @retry_not_clickable
-    def click_element(self, by, value, expected_condition='clickable', timeout=10, retry_timeout=30):
+    def click_element(self, by, value, expected_condition='clickable', timeout=10, retry_timeout=35):
         self.find(by, value, expected_condition=expected_condition, timeout=timeout).click()
 
     def select_dropdown(self, cur, desired):
@@ -80,6 +81,12 @@ class BaseElements(object):
     @staticmethod
     def get_locator(by, value):
         return Locator(by, value)
+
+    @staticmethod
+    def set_value(element, value):
+        element.clear()
+        element.send_keys(value)
+        return None
 
     @property
     def go_back(self):
@@ -98,3 +105,27 @@ class BaseElements(object):
         except TimeoutException:
             return None
         return res
+
+    @staticmethod
+    def retry_login_prompt(func) -> bool:
+        """
+        execute a given function and return True on Success, False on a failure
+        it also re-login if an unexpected login prompt popup arisen.
+        :param func: the function which is decorated with this function.
+        :return: True on Success, False on a failure
+        """
+        def wrapper(self, *args):
+            try:
+                func(self, *args)
+            except TimeoutException:
+                if self.base_elements.supress_time_exception(By.ID, 'login-submit', expected_condition='clickable',
+                                                             timeout=2):
+                    LOGGER.info(F"an unexpected login prompt occurred")
+                    self.login
+                    func(self, *args)
+                else:
+                    LOGGER.info(F"Error, called by: {func.__name__}, args: {args}")
+                    return False
+            return True
+
+        return wrapper

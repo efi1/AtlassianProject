@@ -16,7 +16,7 @@ def web_client():
     web_client = BitBucketActivities(url=settings.url, email=settings.email, passwd=settings.passwd)
     web_client.open_page
     web_client.login
-    # web_client.go_bitbucket
+    web_client.go_bitbucket()
     yield web_client
     web_client.tear_down_driver
 
