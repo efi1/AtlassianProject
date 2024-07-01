@@ -16,7 +16,7 @@ it has a conftest.py file which initiate the client as well as calls for tearDow
 
 tests args and other are placed under src.cfg.cfg_global settings.py
 
-## about the main wev client;
+## about the main web client;
 it uses a wrapper - called "alerts_handling" (which resides in the base_elements.py) and which function as an alerts/popus mitigatgor 
 as well it returns True/False upon success/failure -> therefore it is also usable for validation.
 
