@@ -7,13 +7,13 @@ from src.web.clients.web_client import BitBucketActivities
 
 
 @fixture(scope="session")
-def web_client():
+def web_client(request):
     """
     start the test's client.
     :return: test web client.
     """
     logging.info('initiate the Bitbucket web client')
-    web_client = BitBucketActivities(url=settings.url, email=settings.email, inside=settings.inside)
+    web_client = BitBucketActivities(url=settings.url, email=settings.email, password=settings.password)
     web_client.open_page
     web_client.login
     web_client.go_bitbucket()
