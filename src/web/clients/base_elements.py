@@ -24,7 +24,16 @@ class BaseElements(object):
         self.element = None
         self.driver = driver
 
-    def find(self, by, value, element=None, expected_condition=None, timeout=5):
+    def find(self, by, value, element=None, expected_condition=None, timeout=5) -> object:
+        """
+        Add a waiting functionality (with expected condition) to the 'find_element' function.
+        :param by: locator
+        :param value: searched value
+        :param element: searching within a given element (instead os the webdriver)
+        :param expected_condition: element object
+        :param timeout: timeout to wait for the expected_condition to be fulfilled
+        :return: the found element
+        """
         locator = BaseElements.get_locator(by, value)
         if expected_condition:
             element = WebDriverWait(element if element else self.driver, timeout).until(
@@ -34,7 +43,12 @@ class BaseElements(object):
         return element
 
     @staticmethod
-    def retry_removed_element(func):
+    def retry_removed_element(func) -> bool:
+        """
+        Validate that a resource (i.e. project, repo) was deleted
+        :param func: the wrapped function
+        :return: True if removed successfully, False if not.
+        """
         def wrapper(self, *args, **kwargs):
             timeout = kwargs.get('wrapper_timeout', 5)
             start_time = time.time()
@@ -54,11 +68,16 @@ class BaseElements(object):
         self.find(by, value, expected_condition='clickable', timeout=timeout)
 
     @staticmethod
-    def retry_not_clickable(func):
+    def retry_not_clickable(func) -> object:
+        """
+        it retries func exec when StaleElementReferenceException or ElementClickInterceptedException occur.
+        :param func: the wrapped function.
+        :return: the function execution result.
+        """
         def wrapper(*args, **kwargs):
-            timeout = kwargs.get('retry_timeout', 30)
-            start_time = time.time()
-            while time.time() - start_time < timeout:
+            counter = 0
+            retries = kwargs.get('retries', 5)
+            while counter <= retries:
                 try:
                     return func(*args, **kwargs)
                 except (EC.StaleElementReferenceException, ElementClickInterceptedException) as e:
@@ -68,10 +87,16 @@ class BaseElements(object):
         return wrapper
 
     @retry_not_clickable
-    def click_element(self, by, value, expected_condition='clickable', timeout=10, retry_timeout=35):
+    def click_element(self, by, value, expected_condition='clickable', timeout=5, retries=5):
         self.find(by, value, expected_condition=expected_condition, timeout=timeout).click()
 
-    def select_dropdown(self, cur, desired):
+    def select_dropdown(self, cur, desired) -> None:
+        """
+        handle area text box - drop down table
+        :param cur: the current state or text which is set
+        :param desired: the required text to be set
+        :return: no returns, only select the required option
+        """
         cur_readme_selection = self.find('xpath', F"//*[text()='{cur}']", expected_condition='clickable')
         cur_readme_selection.click()
         option = self.find('xpath', F"//*[text()='{desired}']", expected_condition='clickable')
@@ -107,10 +132,11 @@ class BaseElements(object):
         return res
 
     @staticmethod
-    def retry_login_prompt(func) -> bool:
+    def alerts_handling(func) -> bool:
         """
         execute a given function and return True on Success, False on a failure
-        it also re-login if an unexpected login prompt popup arisen.
+        it also overcomes alerts like unexpected login prompt and other unexpected alert.
+        if login prompt arisen, it re-login.
         :param func: the function which is decorated with this function.
         :return: True on Success, False on a failure
         """
@@ -122,10 +148,13 @@ class BaseElements(object):
                                                              timeout=2):
                     LOGGER.info(F"an unexpected login prompt occurred")
                     self.login
-                    func(self, *args)
+                elif self.base_elements.supress_time_exception(By.XPATH, "//h3[text()='Something went wrong']", expected_condition='presence', timeout=3):
+                    LOGGER.info(F"an unexpected alert occurred, refreshing page...")
+                    self.driver.refresh()
                 else:
                     LOGGER.info(F"Error, called by: {func.__name__}, args: {args}")
                     return False
+                func(self, *args)
             return True
 
         return wrapper

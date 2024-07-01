@@ -4,7 +4,6 @@ import pytest
 LOGGER = logging.getLogger()
 
 
-# @pytest.mark.skip()
 def test_exercise_scenario(web_client, tests_data, clean_workspace):
     LOGGER.info('Create a project in Bitbucket')
     res = web_client.create_project(tests_data.new_proj_name, tests_data.new_proj_key)

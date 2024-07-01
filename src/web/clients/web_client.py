@@ -21,7 +21,7 @@ class BitBucketActivities(BasePage):
         self.email = kwargs.get('email')
         self.pswd = kwargs.get('passwd')
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def go_your_work(self):
         """
         go to the user's workspace
@@ -45,7 +45,7 @@ class BitBucketActivities(BasePage):
         passwd.send_keys(self.pswd)
         button_continue.click()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def logout(self):
         """
         logout Bitbucket account
@@ -58,7 +58,7 @@ class BitBucketActivities(BasePage):
         log_out = self.base_elements.find(By.XPATH, F"//span[text()='Log out']", expected_condition='clickable')
         log_out.click()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def go_bitbucket(self):
         """ go to the home page """
         if self.base_elements.supress_time_exception(By.XPATH, "//span[@aria-label='Atlassian']", timeout=20):
@@ -75,17 +75,16 @@ class BitBucketActivities(BasePage):
         self.delete_repos()
         self.delete_projects()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def go_resource(self, item: str):
         """
         view the user's projects or repositories
         :param item: PROJECTS or REPOSITORIES
         :return: True if succeed False if fails
         """
-        self.base_elements.click_element(By.XPATH, F"//span[contains(text(), '{item}')]",
-                                         expected_condition='clickable', timeout=5, retry_timeout=30)
+        self.base_elements.click_element(By.XPATH, F"//span[contains(text(), '{item}')]")
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def delete_repos(self):
         """ delete all user's repos. """
         LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}....")
@@ -103,17 +102,15 @@ class BitBucketActivities(BasePage):
                                                expected_condition='clickable')
             get_repo.click()
             self.base_elements.click_element(By.XPATH,
-                                             ".//div[contains(text(), 'Repository settings')]/../../../a/div/span",
-                                             expected_condition='clickable')
-            self.base_elements.click_element(By.XPATH, ".//div/button/span[contains(text(), 'Manage repository')]",
-                                             expected_condition='clickable')
+                                             ".//div[contains(text(), 'Repository settings')]/../../../a/div/span")
+            self.base_elements.click_element(By.XPATH, ".//div/button/span[contains(text(), 'Manage repository')]")
             delete_repo = self.base_elements.find(By.XPATH, ".//span[contains(text(), 'Delete repository')]")
             delete_repo.click()
             delete_button = self.base_elements.find(By.XPATH, "//span[text()='Delete']")
             delete_button.click()
             row_no += 1
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def delete_projects(self):
         """ delete all user's projects """
         LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}....")
@@ -128,22 +125,19 @@ class BitBucketActivities(BasePage):
                                               expected_condition='clickable')
             cur_proj = project.text
             project.click()
-            self.base_elements.click_element(By.XPATH, "//div[contains(text(), 'Project settings')]/../../div/span",
-                                             expected_condition='clickable', retry_timeout=5)
-            delete_project = self.base_elements.find(By.XPATH, "//div[contains(text(), 'Delete project')]/..",
-                                                     expected_condition='clickable')
+            self.base_elements.click_element(By.XPATH, "//div[contains(text(), 'Project settings')]/../../div/span")
+            delete_project = self.base_elements.find(By.XPATH, "//div[contains(text(), 'Delete project')]/..")
             delete_project.click()
             submit_delete = self.base_elements.find(By.XPATH, "//button/span[contains(text(), 'Delete')]",
                                                     expected_condition='clickable')
             submit_delete.click()
-            self.base_elements.click_element(By.XPATH, F"//span[contains(text(), 'Projects')]",
-                                             expected_condition='clickable', timeout=5, retry_timeout=20)
+            self.base_elements.click_element(By.XPATH, F"//span[contains(text(), 'Projects')]")
             assert self.base_elements.is_elem_removed(By.XPATH, F"//span[contains(text(), '{cur_proj}')]",
                                                       expected_condition='visibility', timeout=3, retry_timeout=20), (
                 'project is not deleted')
             proj_no += 1
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def go_create(self, item: str):
         """
         select from menu the relevant option for creating a project or a repo.
@@ -160,14 +154,14 @@ class BitBucketActivities(BasePage):
         self.base_elements.find(By.XPATH, F"//h1[contains(text(), '{obj_create_desc.get(item)}')]",
                                 expected_condition='visibility')
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def submit_button(self):
         """
         click on submit button
         """
         self.base_elements.find(By.XPATH, ".//button[@type='submit']", expected_condition='clickable').click()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def is_item_exist(self, resource: str, name_arg: str):
         """
         check if a project or a repo exists, by their names.
@@ -178,14 +172,13 @@ class BitBucketActivities(BasePage):
         assert self.go_resource(resource) is True, F"failed to navigate to {resource} page"
         self.base_elements.find(By.XPATH, F"//a[contains(text(), '{name_arg}')]", expected_condition='presence')
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def open_resource(self, resource, name_arg):
         LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}; opening {resource}: {name_arg}")
         self.go_resource(resource)
-        self.base_elements.click_element(By.XPATH, F"//a[contains(text(), '{name_arg}')]",
-                                         expected_condition='clickable')
+        self.base_elements.click_element(By.XPATH, F"//a[contains(text(), '{name_arg}')]")
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def open_resource_item(self, resource: str, name_arg: str):
         """
         open repository or project by their names
@@ -198,7 +191,7 @@ class BitBucketActivities(BasePage):
         self.base_elements.find(By.XPATH, F"//div[contains(text(), '{obj_validation_dec.get(resource)}')]",
                                 expected_condition='presence')
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def create_project(self, proj_name_arg: str, proj_key_arg: str):
         """
         create a new project by a given name
@@ -215,7 +208,7 @@ class BitBucketActivities(BasePage):
         self.base_elements.find(By.XPATH, "//h4[contains(text(), 'Welcome to your new project')]",
                                 expected_condition='presence', timeout=5)
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def create_repo(self, project_name_arg: str, repo_name_arg: str):
         """
         create a new repository by a given name
@@ -237,7 +230,7 @@ class BitBucketActivities(BasePage):
         self.base_elements.find(By.XPATH, F"//h1[contains(text(), '{repo_name_arg}')]",
                                 expected_condition='presence')
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def go_branches(self, repo_name_arg: str):
         """
         open branches' list of a given repo
@@ -249,7 +242,7 @@ class BitBucketActivities(BasePage):
                                                 expected_condition='presence', timeout=5)
         branches_link.click()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def create_branch(self, repo_name_arg: str, branch_name_arg: str):
         """
         create a branch for a given repo.
@@ -262,12 +255,11 @@ class BitBucketActivities(BasePage):
                                 expected_condition='clickable').click()
         br_text_box = self.base_elements.find(By.XPATH, "//input[@name='branchName']")
         br_text_box.send_keys(branch_name_arg)
-        self.base_elements.click_element(By.XPATH, "//button[@id='create-branch-button']/span",
-                                         expected_condition='clickable', timeout=5, retry_timeout=20)
+        self.base_elements.click_element(By.XPATH, "//button[@id='create-branch-button']/span")
         self.base_elements.find(By.XPATH, F"//h1[contains(text(), '{branch_name_arg}')]",
                                 expected_condition='visibility')
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def open_branch(self, repo_name_arg: str, branch_name_arg: str):
         """
         open a brunch by a given branch name.
@@ -284,7 +276,7 @@ class BitBucketActivities(BasePage):
                                               expected_condition='clickable', timeout=15)
         branch_elem.click()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def add_readme(self, repo_name_arg, branch_name_arg, filename_arg):
         """
         add a readme file to a given branch name.
@@ -298,7 +290,6 @@ class BitBucketActivities(BasePage):
         self.base_elements.find(By.XPATH, F"//span[(text()='{branch_name_arg}')]", expected_condition='visibility',
                                 timeout=15)
         self.driver.execute_script("window.scrollTo(0, document.body.scrollTop);")
-        # self.base_elements.click_element(By.XPATH, "//button[@data-testid='repo-actions-menu--trigger']")
         self.base_elements.find(By.XPATH, "//button[@data-testid='repo-actions-menu--trigger']",
                                 expected_condition='clickable').click()
         self.base_elements.find(By.XPATH, "//span[(text()='Add file')]").click()
@@ -315,11 +306,10 @@ class BitBucketActivities(BasePage):
         commit_button = self.base_elements.find(By.XPATH,
                                                 "//button[@class='save-button aui-button aui-button-primary']")
         commit_button.click()
-        # self.base_elements.click_element(By.XPATH, "//h2[text()='Commit changes']")
         self.base_elements.find(By.XPATH, "//h2[text()='Commit changes']", expected_condition='clickable').click()
         self.base_elements.find(By.XPATH, "//div[@class='dialog-button-panel']/button").click()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def branch_drop_list(self, repo_name_arg: str, branch_name_arg: str):
         """
         open branch manage list (to view the action which can be performed on a branch - like delete or merge)
@@ -331,7 +321,7 @@ class BitBucketActivities(BasePage):
         self.base_elements.find(By.XPATH, "//div[contains(@class,'Droplist')]/div/button/span/span",
                                 expected_condition='clickable', timeout=10).click()
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def delete_branch(self, repo_name_arg: str, branch_name_arg: str):
         """
         delete a branch by its name and the repo of which it is associated with.
@@ -348,7 +338,7 @@ class BitBucketActivities(BasePage):
         self.open_branch(repo_name_arg, branch_name_arg)
 
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def is_readme_exist(self, repo_name_arg: str, branch_name_arg: str, filename_arg: str = 'README.md'):
         """
         verify that a readme file was added to a branch
@@ -360,7 +350,7 @@ class BitBucketActivities(BasePage):
         self.open_branch(repo_name_arg, branch_name_arg)
         self.base_elements.find(By.XPATH, F"//span[text()='{filename_arg}']", expected_condition='presence')
 
-    @BaseElements.retry_login_prompt
+    @BaseElements.alerts_handling
     def merge_branch(self, repo_name_arg, branch_name_arg, filename_arg):
         """
         merge a branch's content with its repo
