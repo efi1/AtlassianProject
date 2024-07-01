@@ -13,7 +13,7 @@ def web_client():
     :return: test web client.
     """
     logging.info('initiate the Bitbucket web client')
-    web_client = BitBucketActivities(url=settings.url, email=settings.email, passwd=settings.passwd)
+    web_client = BitBucketActivities(url=settings.url, email=settings.email, inside=settings.inside)
     web_client.open_page
     web_client.login
     web_client.go_bitbucket()

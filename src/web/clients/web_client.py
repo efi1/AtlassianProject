@@ -19,7 +19,7 @@ class BitBucketActivities(BasePage):
         self.url = kwargs.get('url')
         self.base_elements = BaseElements(self.driver)
         self.email = kwargs.get('email')
-        self.pswd = kwargs.get('passwd')
+        self.inside = kwargs.get('inside')
 
     @BaseElements.alerts_handling
     def go_your_work(self):
@@ -42,7 +42,7 @@ class BitBucketActivities(BasePage):
         button_continue = self.base_elements.find(By.ID, 'login-submit', expected_condition='clickable')
         button_continue.click()
         passwd = self.base_elements.find(By.ID, 'password', expected_condition='clickable')
-        passwd.send_keys(self.pswd)
+        passwd.send_keys(self.inside)
         button_continue.click()
 
     @BaseElements.alerts_handling

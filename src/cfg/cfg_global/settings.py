@@ -1,7 +1,7 @@
 url = 'https://id.atlassian.com/login'
 email = 'efio.at.work@gmail.com'
 pg_header = 'efio at_work'
-passwd = 'aX7&oMCc1^'
+inside = 'aX7&oMCc1^'
 new_proj_name = 'test_proj_01'
 new_proj_key = 'PRJ'
 new_repo_name = 'test_repo_01'
