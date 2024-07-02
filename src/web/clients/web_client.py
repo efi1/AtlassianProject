@@ -105,8 +105,7 @@ class BitBucketActivities(BasePage):
         assert self.go_resource(PROJECTS) is True, 'failed to navigate to projects page'
         if self.base_elements.click_table_row_element(project_name_arg):
             self.base_elements.click_element(By.XPATH, "//div[contains(text(), 'Project settings')]/../../div/span")
-            delete_project = self.base_elements.find(By.XPATH, "//div[contains(text(), 'Delete project')]/..")
-            delete_project.click()
+            self.base_elements.click_element(By.XPATH, "//div[contains(text(), 'Delete project')]/..")  # delete_project
             submit_delete = self.base_elements.find(By.XPATH, "//button/span[contains(text(), 'Delete')]",
                                                     expected_condition='clickable')
             submit_delete.click()
