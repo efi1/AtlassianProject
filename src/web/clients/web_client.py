@@ -69,11 +69,11 @@ class BitBucketActivities(BasePage):
                                                            expected_condition='presence', timeout=20):
             self.relogin
 
-    @property
-    def tear_down_resources(self):
+    @BaseElements.alerts_handling
+    def tear_down_resources(self, proj_name_arg, repo_name_arg):
         LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}....")
-        self.delete_repos()
-        self.delete_projects()
+        self.delete_repos(repo_name_arg)
+        self.delete_projects(proj_name_arg)
 
     @BaseElements.alerts_handling
     def go_resource(self, item: str):
@@ -85,22 +85,11 @@ class BitBucketActivities(BasePage):
         self.base_elements.click_element(By.XPATH, F"//span[contains(text(), '{item}')]")
 
     @BaseElements.alerts_handling
-    def delete_repos(self):
+    def delete_repos(self, repo_name_arg):
         """ delete all user's repos. """
         LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}....")
-        row_no = 1
-        while True:
-            assert self.go_resource(REPOSITORIES) is True, 'failed to navigate to repositories page'
-            repo_table = self.base_elements.find(By.XPATH, F"//*[@id='profile-repositories']"
-                                                           F"/div[3]/table/tbody",
-                                                 expected_condition='visibility', timeout=25)
-            if repo_table.text.startswith('No repositories'):
-                break
-            repo_table.click()
-            get_repo = self.base_elements.find(By.XPATH, F"//*[@id='profile-repositories']"
-                                                         F"/div[3]/table/tbody/tr[{row_no}]/td[1]/div/div[2]/a",
-                                               expected_condition='clickable')
-            get_repo.click()
+        assert self.go_resource(REPOSITORIES) is True, 'failed to navigate to repositories page'
+        if self.base_elements.click_table_row_element(repo_name_arg):
             self.base_elements.click_element(By.XPATH,
                                              ".//div[contains(text(), 'Repository settings')]/../../../a/div/span")
             self.base_elements.click_element(By.XPATH, ".//div/button/span[contains(text(), 'Manage repository')]")
@@ -108,23 +97,13 @@ class BitBucketActivities(BasePage):
             delete_repo.click()
             delete_button = self.base_elements.find(By.XPATH, "//span[text()='Delete']")
             delete_button.click()
-            row_no += 1
 
     @BaseElements.alerts_handling
-    def delete_projects(self):
+    def delete_projects(self, project_name_arg):
         """ delete all user's projects """
         LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}....")
-        proj_no = 1
-        while True:
-            assert self.go_resource(PROJECTS) is True, 'failed to navigate to projects page'
-            project_content = self.base_elements.find(By.XPATH, "//table/tbody", expected_condition='visibility',
-                                                      timeout=20)
-            if project_content.text.startswith('No projects'):
-                break
-            project = self.base_elements.find(By.XPATH, F"//div/table/tbody/tr/td[{proj_no}]/div/div/a",
-                                              expected_condition='clickable')
-            cur_proj = project.text
-            project.click()
+        assert self.go_resource(PROJECTS) is True, 'failed to navigate to projects page'
+        if self.base_elements.click_table_row_element(project_name_arg):
             self.base_elements.click_element(By.XPATH, "//div[contains(text(), 'Project settings')]/../../div/span")
             delete_project = self.base_elements.find(By.XPATH, "//div[contains(text(), 'Delete project')]/..")
             delete_project.click()
@@ -132,10 +111,9 @@ class BitBucketActivities(BasePage):
                                                     expected_condition='clickable')
             submit_delete.click()
             self.base_elements.click_element(By.XPATH, F"//span[contains(text(), 'Projects')]")
-            assert self.base_elements.is_elem_removed(By.XPATH, F"//span[contains(text(), '{cur_proj}')]",
+            assert self.base_elements.is_elem_removed(By.XPATH, F"//span[contains(text(), '{project_name_arg}')]",
                                                       expected_condition='visibility', timeout=3, retry_timeout=20), (
                 'project is not deleted')
-            proj_no += 1
 
     @BaseElements.alerts_handling
     def go_create(self, item: str):
@@ -337,7 +315,6 @@ class BitBucketActivities(BasePage):
         confirm_delete.click()
         self.open_branch(repo_name_arg, branch_name_arg)
 
-
     @BaseElements.alerts_handling
     def is_readme_exist(self, repo_name_arg: str, branch_name_arg: str, filename_arg: str = 'README.md'):
         """
@@ -388,7 +365,7 @@ if __name__ == '__main__':
     inst.go_bitbucket()
     assert inst.delete_branch(new_repo_name, branch_name) is True
     inst.delete_repos
-    inst.tear_down_resources
+    inst.tear_down_resources(new_proj_name, new_repo_name)
     assert inst.create_project(new_proj_name) is True
     assert inst.create_repo(new_proj_name, new_repo_name) is True
     assert inst.open_resource_item(PROJECTS, new_proj_name, new_proj_key) is True

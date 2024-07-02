@@ -17,6 +17,13 @@ EXPECTED_CONDITIONS_ELEMENT = \
         'clickable': 'element_to_be_clickable'
     }
 
+EXPECTED_CONDITIONS_ELEMENTS = \
+    {
+        'visibility': 'visibility_of_all_elements_located',
+        'presence': 'presence_of_all_elements_located',
+        'text': 'text_to_be_present_in_element',
+    }
+
 
 class BaseElements(object):
 
@@ -41,6 +48,15 @@ class BaseElements(object):
         else:
             element = getattr(element if element else self.driver, 'find_element')(locator.by, locator.value)
         return element
+
+    def find_elements(self, by, value, *args, element=None, phrase=None, expected_condition=None, timeout=10):
+        locator = BaseElements.get_locator(by, value)
+        if expected_condition:
+            elements = WebDriverWait(element if element else self.driver, timeout).until(
+                getattr(EC, EXPECTED_CONDITIONS_ELEMENTS.get(expected_condition))(locator))
+        else:
+            elements = getattr(element if element else self.driver, 'find_elements')(locator.by, locator.value)
+        return elements
 
     @staticmethod
     def retry_removed_element(func) -> bool:
@@ -158,3 +174,17 @@ class BaseElements(object):
             return True
 
         return wrapper
+
+    def click_table_row_element(self, resource_name: str) -> bool:
+        """
+        search for a requested resource (repo/project) -> if found one, click and return True
+        :param resource_name:
+        :return: True/False if the requested resource found
+        """
+        tb_row_elements = self.find_elements(By.XPATH, "//td/div/div/a", expected_condition='presence')
+        for elem in tb_row_elements:
+            if elem.text.startswith(resource_name):
+                elem.click()
+                return True
+        return False
+

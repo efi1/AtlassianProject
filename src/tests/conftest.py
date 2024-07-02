@@ -23,7 +23,7 @@ def web_client(request):
 
 @fixture(scope="function")
 def clean_workspace(web_client):
-    web_client.tear_down_resources
+    web_client.tear_down_resources(settings.new_proj_name, settings.new_repo_name)
 
 
 @fixture(scope="session")
