@@ -1,7 +1,7 @@
 url = 'https://id.atlassian.com/login'
 email = 'efio.at.work@gmail.com'
 username = 'efio at_work'
-password = 'aX7&oMCc1^'
+password = ''
 token = 'ATBBFd7dbcQNVMRUKPWaxUVuJ4tVC845ACC1'
 new_proj_name = 'test_proj_01'
 new_proj_key = 'PRJ'

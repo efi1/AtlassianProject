@@ -23,9 +23,10 @@ as well it returns True/False upon success/failure -> therefore it is also usabl
 ## before running the tests:
   - Create a Python virtual environment and activate it (instruction can be found later in the text below)
   - upgrade the pip package by: **python -m pip install --upgrade pip**
-  - install setup.py by: **python -m install .** (include the dot at the end) - see elaboration below.
+  - install setup.py by: **python setup.py install** (include the dot at the end) - see elaboration below.
+  - install the requirements.py by:  **pip install --upgrade -r requirements.txt**
 
 ## To run the tests via pytest (for both Windows and Linux)
-- First, install the setup.py as mentions before 
-- To run the test via cli, while being in the project's root tree, type (and virtualenv is activated):
-  **python -m pytests**
+- First, install the setup.py as mentioned above 
+- To run the test via cli, while being in the **project's root tree**, type (and virtualenv is activated):
+  **python -m ./src pytests --password <bitbucket password>**

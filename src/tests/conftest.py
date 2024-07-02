@@ -5,6 +5,17 @@ from src.cfg.cfg_global import settings
 from src.utils.utils import dict_to_obj
 from src.web.clients.web_client import BitBucketActivities
 
+settings_items = [i for i in settings.__dir__() if not i.startswith('_')]
+
+
+def pytest_addoption(parser) -> None:
+    for item in settings_items:
+        try:
+            value = eval(getattr(settings, item))
+        except (SyntaxError, NameError, TypeError, ZeroDivisionError):
+            value = getattr(settings, item)
+        parser.addoption(F"--{item}", action='store', default=value)
+
 
 @fixture(scope="session")
 def web_client(request):
@@ -13,7 +24,7 @@ def web_client(request):
     :return: test web client.
     """
     logging.info('initiate the Bitbucket web client')
-    web_client = BitBucketActivities(url=settings.url, email=settings.email, password=settings.password)
+    web_client = BitBucketActivities(url=settings.url, email=settings.email, password=request.config.getoption("password"))
     web_client.open_page
     web_client.login
     web_client.go_bitbucket()
