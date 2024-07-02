@@ -14,4 +14,7 @@ build
 dist
 src/web/drivers/chromedriver.exe
 src/web/clients/__pycache__/
-src/web/page_objects/
+src/cfg_global/__pycache__/
+src/tests/__pycache__/
+src/utils/__pycache__/
+src/cfg/cfg_global/__pycache__/
