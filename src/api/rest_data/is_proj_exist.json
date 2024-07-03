@@ -1,0 +1,3 @@
+{
+  "url": "https://api.bitbucket.org/2.0/repositories/mend-io-3415?q=project.key='{proj_key}'"
+}

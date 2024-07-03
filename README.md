@@ -29,4 +29,11 @@ as well it returns True/False upon success/failure -> therefore it is also usabl
 ## To run the tests via pytest (for both Windows and Linux)
 - First, install the setup.py as mentioned above 
 - To run the test via cli, while being in the **project's root tree**, type (and virtualenv is activated):
-  **python -m ./src pytests --password <bitbucket password>**
+  ** python -m ./src pytest --password <bitbucket password> **
+- in order to write the logs of the two projects (api and web) to a different path, please use this:
+- ** webui **
+python -m ./src pytest --password <bitbucket password> --log-file=./logs/web/pytest_web.log
+- ** api **
+python -m ./src pytest --password <bitbucket password> --log-file=./logs/api/pytest_api.log
+
+

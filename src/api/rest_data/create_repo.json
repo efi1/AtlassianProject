@@ -1,10 +1,16 @@
 {
-    "url": "https://api.bitbucket.org/2.0/repositories/mend-io-3415/{repo_name}",
-    "payload": {
-        "scm": "git",
-        "project": {
-            "key": "{proj_key}"
+        "url": "https://api.bitbucket.org/2.0/repositories/mend-io-3415/{repo_name}",
+        "payload": {
+            "scm": "git",
+            "project": {
+                "key": "{proj_key}"
+            },
+            "is_private": true
         },
-        "is_private": true
+    "headers":
+            {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "Authorization": "Bearer {access_token}"
+            }
     }
-}
