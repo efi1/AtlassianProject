@@ -4,3 +4,4 @@ lxml
 contextlib2
 setuptools~=70.1.1
 pytest~=8.2.2
+requests~=2.32.3
