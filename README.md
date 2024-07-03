@@ -18,8 +18,10 @@ Tests' global (common) args and other are placed under src.cfg.cfg_global at set
 Args per a specific test, resides under src.cfg.cfg_tests, and are named by the test name itself.
 "conftest.py" calls these file and load the data, which the tests utilize afterwords.
 
-## about the main web client;
-it uses a wrapper - called "alerts_handling" (which resides in the base_elements.py) and which function as an alerts/popus mitigatgor 
+## About the web client;
+it resides under src.we.clients.
+All other related code resides under src.web. 
+The client uses a wrapper - called "alerts_handling" (which resides in the base_elements.py) and which function as an alerts/popus mitigatgor 
 as well it returns True/False upon success/failure -> therefore it is also usable for validation.
 
 ## The API uses OAuth 2.0 
