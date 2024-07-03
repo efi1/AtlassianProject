@@ -25,6 +25,14 @@ as well it returns True/False upon success/failure -> therefore it is also usabl
 ## The API uses OAuth 2.0 
 You will need both refresh_token and client_secret to instantiate the api client.
 
+## API Client
+  - The client resides under src.api.client.
+  - All api code placed under src.api.
+  - The client has various REST requests which response the requested functionality as described in the assignment.
+  - Each function is responsible for a specific action - create, delete, list.
+  - Some of them uses data files which resides under src.api.rest_data.
+  - These file are read and their content is uses to accomplish the REST calls.
+
 ## before running the tests:
   - Create a Python virtual environment and activate it (instruction can be found later in the text below)
   - upgrade the pip package by: **python -m pip install --upgrade pip**
