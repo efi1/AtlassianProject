@@ -35,7 +35,7 @@ You will need both refresh_token and client_secret to instantiate the api client
   - Some of them uses data files which resides under src.api.rest_data.
   - These file are read and their content is uses to accomplish the REST calls.
 
-## before running the tests:
+## Before running the tests:
   - Create a Python virtual environment and activate it (instruction can be found later in the text below)
   - upgrade the pip package by: **python -m pip install --upgrade pip**
   - install setup.py by: **python setup.py install** (include the dot at the end) - see elaboration below.
