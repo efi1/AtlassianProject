@@ -29,4 +29,4 @@ as well it returns True/False upon success/failure -> therefore it is also usabl
 ## To run the tests via pytest (for both Windows and Linux)
 - First, install the setup.py as mentioned above 
 - To run the test via cli, while being in the **project's root tree**, type (and virtualenv is activated):
-  **python -m ./src pytests --password <bitbucket password>**
+  **python -m ./src pytest --password <bitbucket password>**
