@@ -1,0 +1,6 @@
+{"headers":
+    {
+        "Accept": "application/json",
+        "Authorization": "Bearer {access_token}"
+    }
+}
