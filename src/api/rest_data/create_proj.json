@@ -1,0 +1,16 @@
+{
+  "url": "https://api.bitbucket.org/2.0/workspaces/mend-io-3415/projects",
+  "payload":
+            {
+                "name": "{proj_name}",
+                "key": "{proj_key}",
+                "description": "api testing",
+                "is_private": true
+            },
+    "headers":
+            {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "Authorization": "Bearer {access_token}"
+            }
+}

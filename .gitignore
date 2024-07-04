@@ -18,3 +18,4 @@ src/cfg_global/__pycache__/
 src/tests/__pycache__/
 src/utils/__pycache__/
 src/cfg/cfg_global/__pycache__/
+src/api/clients/__pycache__/

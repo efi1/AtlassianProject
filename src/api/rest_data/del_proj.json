@@ -1,0 +1,7 @@
+{
+  "headers":
+  {
+  "Authorization": "Bearer {access_token}"
+},
+  "url": "https://api.bitbucket.org/2.0/workspaces/mend-io-3415/projects/{proj_key}"
+}

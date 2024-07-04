@@ -1,0 +1,6 @@
+{
+  "proj_name" : "test_proj_02",
+  "proj_key" : "TES",
+  "repo_name": "test_repo_02",
+  "api_default_data_fn ": "get_requests"
+}
