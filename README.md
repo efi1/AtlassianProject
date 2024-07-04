@@ -19,17 +19,22 @@ Args per a specific test, resides under src.cfg.cfg_tests, and are named by the 
 "conftest.py" calls these file and load the data, which the tests utilize afterwords.
 
 ## About the web client;
-it resides under src.we.clients.
+it resides under src.we.clients (web_client.py).
 All other related code resides under src.web. 
-The client uses a wrapper - called "alerts_handling" (which resides in the base_elements.py) and which function as an alerts/popus mitigatgor 
-as well it returns True/False upon success/failure -> therefore it is also usable for validation.
+There are several other clients, which support the entire logic.
+The  base_elements.py is more important than the other and support the web client with some additional logic, which helps
+to find the elements, to wait for elements, to wrap calls coming from the client and to add them an additional functionality.
+The client uses a wrapper - called "alerts_handling" (which resides in the base_elements.py) and which functions as an 
+alerts/popus mitigatgor as well it returns True/False upon success/failure -> therefore it is also usable for validation.
 
 ## The API uses OAuth 2.0 
 You will need both refresh_token and client_secret to instantiate the api client.
 
 ## API Client
-  - The client resides under src.api.client.
+  - The client resides under src.api.client (ManageActivities.py)
   - All api code placed under src.api.
+  - The file handle_token.py (under src.api.clients), is called by the api client and responsible for getting a new 
+  access token which is need fot the api secured connection.
   - The client has various REST requests which response the requested functionality as described in the assignment.
   - Each function is responsible for a specific action - create, delete, list.
   - Some of them uses data files which resides under src.api.rest_data.
