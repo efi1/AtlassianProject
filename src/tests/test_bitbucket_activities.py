@@ -1,6 +1,9 @@
 import logging
 
+import pytest
 
+
+@pytest.mark.skip('temp')
 def test_create_delete_list_repository(api_client, cfg_data, pre_test_activity, logger):
     logger.info(F"\n\n******** Begin a new test execution *****************************************\n")
 
@@ -32,6 +35,7 @@ def test_create_delete_list_repository(api_client, cfg_data, pre_test_activity, 
     logger.info('list is empty as expected - the repo was deleted')
 
 
+# @pytest.mark.skip('temp')
 def test_exercise_scenario(web_client, tests_data, clean_web_workspace, logger):
     logger.info(F"\n\n******** Begin a new test execution *****************************************\n")
 

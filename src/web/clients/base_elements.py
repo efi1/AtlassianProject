@@ -167,6 +167,12 @@ class BaseElements(object):
                 elif self.base_elements.supress_time_exception(By.XPATH, "//h3[text()='Something went wrong']", expected_condition='presence', timeout=3):
                     LOGGER.info(F"an unexpected alert occurred, refreshing page...")
                     self.driver.refresh()
+                elif self.base_elements.supress_time_exception(By.XPATH, "//h1[contains(text()='Repository not found')]", expected_condition='presence', timeout=3):
+                    LOGGER.info(F"an unexpected alert occurred, refreshing page...")
+                    self.driver.refresh()
+                elif self.base_elements.supress_time_exception(By.XPATH, "//a[@data-label='Get it free']", expected_condition='presence', timeout=3):
+                    LOGGER.info(F"an unexpected alert occurred, refreshing page...")
+                    self.go_back
                 else:
                     LOGGER.info(F"Error, called by: {func.__name__}, args: {args}")
                     return False
