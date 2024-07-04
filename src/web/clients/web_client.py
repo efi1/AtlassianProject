@@ -271,7 +271,7 @@ class BitBucketActivities(BasePage):
                                 expected_condition='clickable').click()
         self.base_elements.find(By.XPATH, "//span[(text()='Add file')]").click()
         time.sleep(3)  # arbitrary wait due do an open issue in Bitbucket
-        file_name = self.base_elements.find(By.XPATH, "//input[@id='filename']", expected_condition='presence')
+        file_name = self.base_elements.find(By.XPATH, "//input[@id='filename']", expected_condition='presence', timeout=25)
         file_name.send_keys(filename_arg)
         code_mirror = self.base_elements.find(By.XPATH, "//div[@class='CodeMirror cm-s-trac']",
                                               expected_condition='visibility')
@@ -314,7 +314,6 @@ class BitBucketActivities(BasePage):
         confirm_delete.click()
         self.open_branch(repo_name_arg, branch_name_arg)
 
-    @BaseElements.alerts_handling
     def is_readme_exist(self, repo_name_arg: str, branch_name_arg: str, filename_arg: str = 'README.md'):
         """
         verify that a readme file was added to a branch
@@ -324,7 +323,9 @@ class BitBucketActivities(BasePage):
         """
         LOGGER.info(F"++++ in {inspect.currentframe().f_code.co_name}....")
         self.open_branch(repo_name_arg, branch_name_arg)
-        self.base_elements.find(By.XPATH, F"//span[text()='{filename_arg}']", expected_condition='presence')
+        if self.base_elements.supress_time_exception(By.XPATH, F"//span[text()='{filename_arg}']", expected_condition='presence') is None:
+            return False
+        return True
 
     @BaseElements.alerts_handling
     def merge_branch(self, repo_name_arg, branch_name_arg, filename_arg):
