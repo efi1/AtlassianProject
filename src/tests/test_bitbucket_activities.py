@@ -1,4 +1,3 @@
-import pytest
 
 
 def test_create_delete_list_repository(api_client, cfg_data, pre_test_activity, logger):
