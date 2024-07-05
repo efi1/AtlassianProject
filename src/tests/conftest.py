@@ -90,7 +90,7 @@ def clean_api(api_client, cfg_data):
 @fixture(scope="function")
 def pre_test_activity(api_client: object, cfg_data: object, clean_api: object):
     """
-    creating a project for the repository to be created in
+   run before each test; performe a tearDown and then create a project for the repository to be created in
     :param api_client: api client
     :param cfg_data: tests' data
     :param clean_api: tear down before creating the project
@@ -100,9 +100,9 @@ def pre_test_activity(api_client: object, cfg_data: object, clean_api: object):
 
 
 @fixture(scope="function")
-def logger(request, test_name):
+def logger(request, test_name, debug_mode='INFO'):
     logger = logging.getLogger(test_name)
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(getattr(logging, debug_mode))
     log_file = f"../../logs/{test_name}.log"
     file_handler = logging.FileHandler(log_file)
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
