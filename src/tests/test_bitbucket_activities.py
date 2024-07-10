@@ -1,3 +1,4 @@
+import pytest
 
 
 def test_create_delete_list_repository(api_client, cfg_data, pre_test_activity, logger):
@@ -31,6 +32,7 @@ def test_create_delete_list_repository(api_client, cfg_data, pre_test_activity, 
     logger.info('list is empty as expected - the repo was deleted')
 
 
+# @pytest.mark.skip('temp')
 def test_exercise_scenario(web_client, tests_data, clean_web_workspace, logger):
     logger.info(F"\n\n******** Begin a new test execution *****************************************\n")
 
@@ -85,6 +87,7 @@ def test_exercise_scenario(web_client, tests_data, clean_web_workspace, logger):
     logger.info(F"Log out successfully from Bitbucket")
 
 
+# @pytest.mark.skip('temp')
 def test_negative_verify_non_exist_file_in_branch(web_client, tests_data, clean_web_workspace, logger):
     logger.info(F"\n\n******** Begin a new test execution *****************************************\n")
 
