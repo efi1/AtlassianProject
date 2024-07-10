@@ -19,3 +19,5 @@ src/tests/__pycache__/
 src/utils/__pycache__/
 src/cfg/cfg_global/__pycache__/
 src/api/clients/__pycache__/
+bitbucket_obtaining_access_token.txt
+
