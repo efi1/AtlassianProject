@@ -1,4 +1,4 @@
-"""Minimal setup file for pythonMProject."""
+"""Minimal setup file for AtlassianProject."""
 
 from setuptools import find_packages, setup
 
@@ -6,9 +6,9 @@ with open('requirements.txt') as f:
     required = f.read().splitlines()
 
 setup(
-    name='pythonMProject',
+    name='AtlassianProject',
     version='0.1.0',
-    description='pythonMProject',
+    description='AtlassianProject',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     package_data={
