@@ -1,5 +1,5 @@
 url = 'https://id.atlassian.com/login'
-email = 'efio.at.work@gmail.com'
+email = ''
 username = 'efio at_work'
 password = ''
 client_secret = ''
