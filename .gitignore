@@ -5,8 +5,8 @@
 .venv
 dist/
 build/
-src/pythonMProject.egg-info
-src/pythonMProject.egg-info/
+src/AltassianPoject.egg-info
+src/AltassianPoject.egg-info/
 logs
 ./logfile.log
 logs/logfile.log
