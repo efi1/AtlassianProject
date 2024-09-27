@@ -43,7 +43,7 @@ You will need both refresh_token and client_secret to instantiate the api client
 ## Before running the tests:
   - Create a Python virtual environment and activate it (instruction can be found later in the text below)
   - upgrade the pip package by: **python -m pip install --upgrade pip**
-  - install setup.py by: **python setup.py install** (include the dot at the end) - see elaboration below.
+  - install setup.py by: **python setup.py install**
   - install the requirements.py by:  **pip install --upgrade -r requirements.txt**
 
 ## To run the tests via pytest (for both Windows and Linux)
