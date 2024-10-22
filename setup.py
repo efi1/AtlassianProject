@@ -1,8 +1,11 @@
 """Minimal setup file for AtlassianProject."""
 
 from setuptools import find_packages, setup
+from pathlib import Path
 
-with open('requirements.txt') as f:
+req_location = Path().absolute().joinpath('requirements.txt')
+
+with open(req_location) as f:
     required = f.read().splitlines()
 
 setup(
@@ -20,5 +23,5 @@ setup(
     author='Efi Ovadia',
     author_email='efovadia@gmail.com',
     license='proprietary',
-    install_requires=[required, 'pytest']
+    install_requires=required
 )
